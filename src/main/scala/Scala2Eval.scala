@@ -24,8 +24,11 @@ object Scala2Eval extends App:
   
   def handleAdd(l: Exp, r: Exp): WithEnv= eval(l) + eval(r)
   def handleMul(l: Exp, r: Exp): WithEnv= eval(l) * eval(r)
-  def handleVar(s: String): WithEnv= env.getOrElse(s,0)
-  
+  def handleVar(s: String): WithEnv= {
+    val env = summon[Env]  
+    env.getOrElse(s,0)
+  }
+
   val exp1: Exp =
     Mul(
       Var("z"),
