@@ -3,6 +3,8 @@
 
   type Env = Map[String, Int]
   type WithEnv = Env ?=> Int
+  
+  def summonEnv: Env ?=> Env = summon[Env]
 
   enum Exp:
     case Val(value: Int)
@@ -19,13 +21,10 @@
       case Add(l, r) => handleAdd(l, r)
       case Mul(l, r) => handleMul(l, r)
     }
-
-  def summonEnv: Env ?=> Env = summon[Env]
   
   def handleAdd(l: Exp, r: Exp): WithEnv = eval(l) + eval(r)
   def handleMul(l: Exp, r: Exp): WithEnv = eval(l) * eval(r)
-  def handleVar(s: String): WithEnv =
-    summonEnv.getOrElse(s, 0)
+  def handleVar(s: String): WithEnv = summonEnv.getOrElse(s, 0)
 
   val exp1: Exp =
     Mul(
