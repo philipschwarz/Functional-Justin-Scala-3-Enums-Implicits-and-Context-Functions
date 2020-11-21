@@ -1,19 +1,17 @@
 object Scala2Eval extends App:
   
   // An expression evaluator using Scala 2
+
+  type Env = Map[String, Int]
+  type WithEnv = Env ?=> Int
   
-  enum Exp: 
+  enum Exp:
     case Val(value: Int)
     case Add(left: Exp, right: Exp)
     case Mul(left: Exp, right: Exp)
     case Var(identifier: String)
   
   import Exp._
-  
-  type Env = Map[String,Int]
-  
-  type WithEnv = Env ?=> Int
-  
   def eval(exp: Exp): WithEnv  = 
     exp match {
       case Var(id) => handleVar(id)
@@ -39,9 +37,10 @@ object Scala2Eval extends App:
           Var("y"))
       )
     )
+    
   given env as Env = Map( "x" -> 17, "y" -> 10, "z" -> 2)
+  
   val eval1 = eval(exp1)
   
   assert( eval1 == 400 )
   println(s"Eval exp gives $eval1")
-
