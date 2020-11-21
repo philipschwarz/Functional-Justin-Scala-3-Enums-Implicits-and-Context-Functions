@@ -12,7 +12,9 @@ object Scala2Eval extends App:
   
   type Env = Map[String,Int]
   
-  def eval(exp: Exp)(using env: Env): Int = 
+  type WithEnv = Env ?=> Int
+  
+  def eval(exp: Exp): WithEnv  = 
     exp match {
       case Var(id) => handleVar(id)
       case Val(value) => value
@@ -20,9 +22,9 @@ object Scala2Eval extends App:
       case Mul(l,r) => handleMul(l,r)
     }
   
-  def handleAdd(l: Exp, r: Exp)(using env:Env) = eval(l) + eval(r)
-  def handleMul(l: Exp, r: Exp)(using env: Env) = eval(l) * eval(r)
-  def handleVar(s: String)(using env: Env) = env.getOrElse(s,0)
+  def handleAdd(l: Exp, r: Exp): WithEnv= eval(l) + eval(r)
+  def handleMul(l: Exp, r: Exp): WithEnv= eval(l) * eval(r)
+  def handleVar(s: String): WithEnv= env.getOrElse(s,0)
   
   val exp1: Exp =
     Mul(
