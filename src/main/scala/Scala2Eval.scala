@@ -22,11 +22,12 @@ object Scala2Eval extends App:
       case Mul(l,r) => handleMul(l,r)
     }
   
-  def handleAdd(l: Exp, r: Exp): WithEnv= eval(l) + eval(r)
-  def handleMul(l: Exp, r: Exp): WithEnv= eval(l) * eval(r)
-  def handleVar(s: String): WithEnv= {
-    val env = summon[Env]  
-    env.getOrElse(s,0)
+  def summonEnv: Env ?=> Env = summon[Env]
+  
+  def handleAdd(l: Exp, r: Exp): WithEnv = eval(l) + eval(r)
+  def handleMul(l: Exp, r: Exp): WithEnv = eval(l) * eval(r)
+  def handleVar(s: String): WithEnv = {
+    summonEnv.getOrElse(s,0)
   }
 
   val exp1: Exp =
