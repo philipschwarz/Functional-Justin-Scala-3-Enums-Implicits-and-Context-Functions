@@ -1,12 +1,14 @@
 object Scala2Eval extends App {
   
   // An expression evaluator using Scala 2
-
-  sealed trait Exp
-  case class Val(value: Int) extends Exp
-  case class Add(left: Exp, right: Exp) extends Exp
-  case class Mul(left: Exp, right: Exp) extends Exp
-  case class Var(identifier: String) extends Exp
+  
+  enum Exp: 
+    case Val(value: Int)
+    case Add(left: Exp, right: Exp)
+    case Mul(left: Exp, right: Exp)
+    case Var(identifier: String)
+  
+  import Exp._
   
   type Env = Map[String,Int]
   
