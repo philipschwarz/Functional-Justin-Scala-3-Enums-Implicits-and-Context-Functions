@@ -1,4 +1,4 @@
-object Scala2Eval extends App {
+object Scala2Eval extends App:
   
   // An expression evaluator using Scala 2
   
@@ -12,14 +12,13 @@ object Scala2Eval extends App {
   
   type Env = Map[String,Int]
   
-  def eval(exp: Exp)(implicit env: Env): Int = {
+  def eval(exp: Exp)(implicit env: Env): Int = 
     exp match {
       case Var(id) => handleVar(id)
       case Val(value) => value
       case Add(l,r) => handleAdd(l,r)
       case Mul(l,r) => handleMul(l,r)
     }
-  }
   
   def handleAdd(l: Exp, r: Exp)(implicit env:Env) = eval(l) + eval(r)
   def handleMul(l: Exp, r: Exp)(implicit env: Env) = eval(l) * eval(r)
@@ -39,4 +38,4 @@ object Scala2Eval extends App {
   val eval1 = eval(exp1)
   
   println(s"Eval exp gives $eval1")
-}
+
