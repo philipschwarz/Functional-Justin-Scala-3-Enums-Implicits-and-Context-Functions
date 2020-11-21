@@ -42,5 +42,6 @@ object Scala2Eval extends App:
   given env as Env = Map( "x" -> 17, "y" -> 10, "z" -> 2)
   val eval1 = eval(exp1)
   
+  assert( eval1 == 400 )
   println(s"Eval exp gives $eval1")
 
